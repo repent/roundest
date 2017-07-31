@@ -3,6 +3,8 @@ require 'float'
 
 class Roundest
 
+  VERSION = '0.1'
+
   #def between(min, max)
   #  min,max = max,min unless max >= min
   #  start = (min.to_f + max.to_f) / 2
