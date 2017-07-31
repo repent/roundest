@@ -22,9 +22,6 @@ class Float
     e = -b.length
     v = a + b
     f = Floteger.new(v,e)
-    while f != f.clean
-      f = f.clean
-    end
-    f
+    f.clean!
   end
 end

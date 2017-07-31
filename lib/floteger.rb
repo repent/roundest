@@ -1,6 +1,9 @@
 class Floteger
   include Comparable
 
+  class RecoverableError < StandardError
+  end
+
   def initialize(value=0, exp=1)
     @value=value.to_i
     @exponent=exp.to_i
@@ -39,10 +42,17 @@ class Floteger
     else
       raise "Invalid direction #{direction.to_s}"
     end
-    raise "Cannot round #{self.to_s}" unless sf > 1
+    raise RecoverableError, "Cannot round #{self.to_s}" unless sf > 1
     v = @value.to_s[0...(-dp)].to_i + dir
     e = @exponent + dp
     Floteger.new(v, e)
+  end
+  def round_if_possible(direction=:up, dp=1)
+    begin
+      round(direction, dp)
+    rescue RecoverableError
+      return self
+    end
   end
   def end_in_five
     v = @value.to_s
@@ -53,9 +63,13 @@ class Floteger
     @value.to_s[-1] == '5'
   end
   #def round!(dp=1); self = round(dp); end
-  def clean
-    return self if @value.to_s[-1] != '0'
-    round
+  # NOT WORKING rounds 42370e-1 to 4238
+  def clean! # deals with @value ending in 0
+    while @value.to_s[-1] == '0'
+      @value = @value.to_s[0...-1].to_i
+      @exponent += 1
+    end
+    self
   end
   #def clean!; self = self.clean; end
   def **(e)

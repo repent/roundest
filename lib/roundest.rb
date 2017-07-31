@@ -1,5 +1,8 @@
 require 'floteger'
 require 'float'
+require 'roundest/version'
+
+require 'pry'
 
 class Roundest
 
@@ -22,39 +25,52 @@ class Roundest
   #    dump(x,min,max)
   #  end
   #end
+
+  # Class methods
+
+  def self.roundest(low,high,verbose=false)
+    break_point(low,high,verbose)
+  end
+
+  private
   
-  def dump(current,min,max)
+  def self.dump(current,min,max)
     puts "Current guess: #{current} [between #{min} and #{max}]"
   end
   
-  def break_point(low,high)
+  def self.break_point(low,high,verbose=false)
     low,high = high,low if low > high
     return low if low == high
     # arbitrary starting point
+    puts "Range: #{low} to #{high}" if verbose
     guess = ((low.to_f + high.to_f) / 2).to_floteger
+    puts "Starting point: #{guess}" if verbose
     # round down
     while better_guess(guess,low,high)
       guess = better_guess(guess,low,high)
-      dump guess, low, high
+      puts "Found rounder number: #{guess}" if verbose
+      #dump guess, low, high
     end
+    puts "Roundest number is: #{guess}" if verbose
     guess
   end
   
-  def better_guess(guess,low,high)
+  def self.better_guess(guess,low,high)
     # try rounding down
-    better = guess.round(:down)
-    if better > low and better < high
+    better = guess.round_if_possible(:down)
+    #binding.pry
+    if better != guess and better > low and better < high
       return better
     else
       # try rounding up
-      better = guess.round(:up)
-      if better > low and better < high
-        retun better
+      better = guess.round_if_possible(:up)
+      if better != guess and better > low and better < high
+        return better
       else
         # try ending in 5
         return false if guess.ends_in_five?
         better = guess.end_in_five
-        if better > low and better < high
+        if better != guess and better > low and better < high
           return better
         end
       end
@@ -62,3 +78,4 @@ class Roundest
     end
   end
 end
+
