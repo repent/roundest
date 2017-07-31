@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Given a range between two floating point numbers, find one of the 'roundest' (i.e. shortest, or ending in 5) numbers that are strictly within the range."
   s.authors     = ["Dan Hetherington"]
   s.email       = 'dan.hetherington@gmail.com'
-  s.files       = ["lib/roundest.rb"]
+  s.files       = ["lib/roundest.rb", "lib/float.rb", "lib/floteger.rb"]
   s.homepage    =
     'http://rubygems.org/gems/roundest'
   s.license       = 'GPL 3'
