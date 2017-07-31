@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Roundest::VERSION
   spec.authors       = ["Dan Hetherington"]
   spec.email         = ["dan.hetherington@gmail.com"]
-  spec.summary       = %q{Given a range between two floating point numbers, find one of the 'roundest' (i.e. shortest, or ending in 5) numbers that are strictly within the range."}
+  spec.summary       = %q{Given a range between two floating point numbers, find one of the 'roundest' (i.e. shortest, or ending in 5) numbers that are strictly within the range.}
   #spec.description   = %q{}
   spec.homepage      = 'https://github.com/repent/roundest'
   spec.license       = "GPL-3.0"
